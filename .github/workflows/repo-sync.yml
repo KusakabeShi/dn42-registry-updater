@@ -2,7 +2,7 @@ name: Repo Sync
 
 on:
   schedule:
-  - cron:  "47 * * * *"
+  - cron:  "2/13 * * * *"
   issues:
     types: [closed]
   
