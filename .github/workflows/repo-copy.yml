@@ -5,6 +5,8 @@ on:
   - cron:  "47 5 * * *"
   issues:
     types: [closed]
+  push:
+  
 
 jobs:
   repo-sync:
@@ -33,7 +35,7 @@ jobs:
     - name: Install and setup wireguard
       run: |
         sudo apt-get install -y wireguard
-        echo ${{secrets.WG_PROFILE}} > /etc/wireguard/wg-profile.conf
+        echo "${{secrets.WG_PROFILE}}" > /etc/wireguard/wg-profile.conf
         wg-quick up wg-profile
       shell: bash
     - name: Pull from source repo
@@ -56,12 +58,4 @@ jobs:
       run: |
         echo ${{ steps.current-time.outputs.time }} > $GITHUB_WORKSPACE/sync
       shell: bash
-    - name: Commit & Push changes
-      uses: actions-js/push@master
-      with:
-        github_token: ${{ secrets.GITHUB_TOKEN }}
-        branch: main
-        force: true
-        author_email: si@kskb.eu.org
-        author_name: KusakabeSi
-        message: sync at ${{ steps.current-time.outputs.time }}
+
