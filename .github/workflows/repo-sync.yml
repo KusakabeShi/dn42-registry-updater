@@ -30,6 +30,7 @@ jobs:
       id: current-time
     - name: Clone from target repo
       run: |
+        echo My ip is $(wget -qO- ifconfig.me)
         git clone --depth 1 git@github.com:KusakabeSi/dn42-registry.git ~/work/old_repo
     - name: Pull from source repo
       run: |
