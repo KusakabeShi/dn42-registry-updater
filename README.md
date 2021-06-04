@@ -6,6 +6,6 @@ To reduce the server load of git.dn42.dev, This is what I do:
 1. Clone from git@github.com:KusakabeSi/dn42-registry.git
 2. Change origin to git@git.dn42.dev:dn42/registry.git
 3. Pull from git.dn42.dev. 
-    * It already contains old files, it will not download whole repo.
-    * So it won't cosume too many network traffic.
-5. Change back to github.com and git push
+    * It already contains old files comes from step one to prevent download whole repo.
+    * So it won't cosume too many network traffic and cpu loading of git.dn42.dev.
+5. Change origin back to github.com and git push.
