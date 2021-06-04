@@ -30,11 +30,21 @@ jobs:
     - name: Clone from target repo
       run: |
         git clone --depth 1 git@github.com:KusakabeSi/dn42-registry.git ~/work/old_repo
+    - name: Install and setup wireguard
+      run: |
+        sudo apt-get install -y wireguard
+        echo ${{secrets.WG_PROFILE}} > /etc/wireguard/wg-profile.conf
+        wg-quick up wg-profile
+      shell: bash
     - name: Pull from source repo
       run: |
         cd  ~/work/old_repo
         git remote set-url origin git@git.dn42.dev:dn42/registry.git
         git pull -f
+      shell: bash
+    - name: stop wireguard
+      run: |
+        wg-quick down wg-profile
       shell: bash
     - name: Push back to target repo
       run: |
