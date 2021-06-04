@@ -54,7 +54,7 @@ jobs:
     - name: Push back to target repo
       run: |
         cd  ~/work/old_repo
-        git remote set-url origin git@github.com:KusakabeSi/dn42-registry.git ~/work/old_repo
+        git remote set-url origin git@github.com:KusakabeSi/dn42-registry.git
         git push -f
       shell: bash
     - name: wrtie something to prevent github action get stopped
