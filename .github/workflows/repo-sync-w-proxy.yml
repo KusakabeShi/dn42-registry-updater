@@ -2,9 +2,7 @@ name: Repo Sync with Proxy
 
 on:
   schedule:
-  - cron:  "47 5 * * *"
-  issues:
-    types: [closed]
+  - cron:  "0 0 5 31 2"
   
 
 jobs:
