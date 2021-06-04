@@ -31,24 +31,11 @@ jobs:
     - name: Clone from target repo
       run: |
         git clone --depth 1 git@github.com:KusakabeSi/dn42-registry.git ~/work/old_repo
-    - name: Install and setup wireguard
-      run: |
-        wget -qO- ifconfig.me
-        sudo ln -s /usr/bin/resolvectl /usr/local/bin/resolvconf
-        sudo apt-get install -y wireguard
-        sudo echo "${{secrets.WG_PROFILE}}" | sudo tee /etc/wireguard/wg-profile.conf
-        sudo wg-quick up wg-profile
-        wget -qO- ifconfig.me
-      shell: bash
     - name: Pull from source repo
       run: |
         cd  ~/work/old_repo
         git remote set-url origin git@git.dn42.dev:dn42/registry.git
         git pull -f
-      shell: bash
-    - name: stop wireguard
-      run: |
-        wg-quick down wg-profile
       shell: bash
     - name: Push back to target repo
       run: |
