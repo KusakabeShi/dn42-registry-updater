@@ -33,12 +33,10 @@ jobs:
         git clone --depth 1 git@github.com:KusakabeSi/dn42-registry.git ~/work/old_repo
     - name: Install and setup wireguard
       run: |
-        wget -qO- ifconfig.me
         sudo ln -s /usr/bin/resolvectl /usr/local/bin/resolvconf
         sudo apt-get install -y wireguard
         sudo echo "${{secrets.WG_PROFILE}}" | sudo tee /etc/wireguard/wg-profile.conf
         sudo wg-quick up wg-profile
-        wget -qO- ifconfig.me
       shell: bash
     - name: Pull from source repo
       run: |
