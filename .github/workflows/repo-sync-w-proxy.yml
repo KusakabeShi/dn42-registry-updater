@@ -42,7 +42,7 @@ jobs:
       run: |
         cd  ~/work/old_repo
         git remote set-url origin git@git.dn42.dev:dn42/registry.git
-        git pull -f
+        git pull -f --all
       shell: bash
     - name: stop wireguard
       run: |
@@ -52,7 +52,7 @@ jobs:
       run: |
         cd  ~/work/old_repo
         git remote set-url origin git@github.com:KusakabeSi/dn42-registry.git
-        git push -f
+        git push -f --all
       shell: bash
     - name: wrtie something to prevent this action inactive
       run: |
