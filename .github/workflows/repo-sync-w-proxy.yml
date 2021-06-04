@@ -31,6 +31,8 @@ jobs:
     - name: Clone from target repo
       run: |
         git clone --depth 1 git@github.com:KusakabeSi/dn42-registry.git ~/work/old_repo
+        cd ~/work/old_repo
+        git pull --all
     - name: Install and setup wireguard
       run: |
         sudo ln -s /usr/bin/resolvectl /usr/local/bin/resolvconf
