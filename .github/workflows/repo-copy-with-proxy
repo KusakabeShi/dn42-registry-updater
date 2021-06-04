@@ -8,8 +8,8 @@ on:
   
 
 jobs:
-  repo-sync:
-    name: Repo Sync
+  repo-sync-w-proxy:
+    name: Repo Sync with Proxy
     runs-on: ubuntu-latest
     env:
       GIT_SSH_COMMAND: "ssh -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no -i ~/.ssh/id_rsa"
