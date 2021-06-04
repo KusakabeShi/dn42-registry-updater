@@ -5,7 +5,6 @@ on:
   - cron:  "47 5 * * *"
   issues:
     types: [closed]
-  push:
   
 
 jobs:
@@ -57,8 +56,16 @@ jobs:
         git remote set-url origin git@github.com:KusakabeSi/dn42-registry.git
         git push -f
       shell: bash
-    - name: wrtie something to prevent github action get stopped
+    - name: wrtie something to prevent this action inactive
       run: |
         echo ${{ steps.current-time.outputs.time }} > $GITHUB_WORKSPACE/sync
       shell: bash
-
+    - name: Commit & Push changes
+      uses: actions-js/push@master
+      with:
+        github_token: ${{ secrets.GITHUB_TOKEN }}
+        branch: main
+        force: true
+        author_email: si@kskb.eu.org
+        author_name: KusakabeSi
+        message: sync at ${{ steps.current-time.outputs.time }}
