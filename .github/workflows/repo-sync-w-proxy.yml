@@ -43,8 +43,8 @@ jobs:
     - name: Pull from source repo
       run: |
         cd  ~/work/old_repo
-        git remote set-url origin git@git.dn42.dev:dn42/registry.git
-        git pull -f --all
+        git remote add origin git@git.dn42.dev:dn42/registry.git
+        git pull --all -f git@git.dn42.dev:dn42/registry.git
       shell: bash
     - name: stop wireguard
       run: |
@@ -53,8 +53,7 @@ jobs:
     - name: Push back to target repo
       run: |
         cd  ~/work/old_repo
-        git remote set-url origin git@github.com:KusakabeSi/dn42-registry.git
-        git push -f --all
+        git fetch --all git@github.com:KusakabeSi/dn42-registry.git
       shell: bash
     - name: wrtie something to prevent this action inactive
       run: |
