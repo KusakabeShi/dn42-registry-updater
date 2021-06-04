@@ -1,4 +1,4 @@
-name: Repo Sync
+name: Repo Sync with Proxy
 
 on:
   schedule:
@@ -8,8 +8,8 @@ on:
   
 
 jobs:
-  repo-sync:
-    name: Repo Sync
+  repo-sync-w-proxy:
+    name: Repo Sync with Proxy
     runs-on: ubuntu-latest
     env:
       GIT_SSH_COMMAND: "ssh -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no -i ~/.ssh/id_rsa"
@@ -30,19 +30,17 @@ jobs:
       id: current-time
     - name: Clone from target repo
       run: |
-        echo My ip is $(wget -qO- ifconfig.me)
-        git clone --depth 1 git@github.com:KusakabeSi/dn42-registry.git ~/work/old_repo
+        git clone --mirror git@github.com:KusakabeSi/dn42-registry.git ~/work/the_repo
     - name: Pull from source repo
       run: |
-        cd  ~/work/old_repo
-        git remote set-url origin git@git.dn42.dev:dn42/registry.git
-        git pull -f
+        cd  ~/work/the_repo
+        git remote add --mirror=fetch dn42 https://${{secrets.DN42_GIT_TOKEN}}@git.dn42.dev/dn42/registry.git
+        git fetch dn42 '+refs/heads/*:refs/heads/*' '+refs/tags/*:refs/tags/*'
       shell: bash
     - name: Push back to target repo
       run: |
-        cd  ~/work/old_repo
-        git remote set-url origin git@github.com:KusakabeSi/dn42-registry.git
-        git push -f
+        cd  ~/work/the_repo
+        git push -f  --mirror origin
       shell: bash
     - name: wrtie something to prevent this action inactive
       run: |
