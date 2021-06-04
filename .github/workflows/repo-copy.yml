@@ -35,8 +35,8 @@ jobs:
     - name: Install and setup wireguard
       run: |
         sudo apt-get install -y wireguard
-        echo "${{secrets.WG_PROFILE}}" > /etc/wireguard/wg-profile.conf
-        wg-quick up wg-profile
+        sudo echo "${{secrets.WG_PROFILE}}" | sudo tee /etc/wireguard/wg-profile.conf
+        sudo wg-quick up wg-profile
       shell: bash
     - name: Pull from source repo
       run: |
