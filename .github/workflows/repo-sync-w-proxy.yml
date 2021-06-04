@@ -30,9 +30,7 @@ jobs:
       id: current-time
     - name: Clone from target repo
       run: |
-        git clone --depth 1 git@github.com:KusakabeSi/dn42-registry.git ~/work/old_repo
-        cd ~/work/old_repo
-        git pull --all
+        git clone --mirror git@github.com:KusakabeSi/dn42-registry.git dn42-registry ~/work/the_repo
     - name: Install and setup wireguard
       run: |
         sudo ln -s /usr/bin/resolvectl /usr/local/bin/resolvconf
@@ -42,9 +40,9 @@ jobs:
       shell: bash
     - name: Pull from source repo
       run: |
-        cd  ~/work/old_repo
-        git remote add origin git@git.dn42.dev:dn42/registry.git
-        git pull --all -f git@git.dn42.dev:dn42/registry.git
+        cd  ~/work/the_repo
+        git remote add --mirror=fetch dn42 https://${{secrets.DN42_GIT_TOKEN}}@git.dn42.dev/dn42/registry.git
+        git fetch dn42 '+refs/heads/*:refs/heads/*' '+refs/tags/*:refs/tags/*'
       shell: bash
     - name: stop wireguard
       run: |
@@ -52,8 +50,8 @@ jobs:
       shell: bash
     - name: Push back to target repo
       run: |
-        cd  ~/work/old_repo
-        git fetch --all git@github.com:KusakabeSi/dn42-registry.git
+        cd  ~/work/the_repo
+        git push -f  --mirror origin
       shell: bash
     - name: wrtie something to prevent this action inactive
       run: |
