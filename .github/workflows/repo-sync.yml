@@ -44,7 +44,7 @@ jobs:
       shell: bash
     - name: wrtie something to prevent this action inactive
       run: |
-        echo ${{ steps.current-time.outputs.time }} > $GITHUB_WORKSPACE/sync
+        echo $(date +%Y-%m-%d) > $GITHUB_WORKSPACE/sync
       shell: bash
     - name: Commit & Push changes
       uses: actions-js/push@master
