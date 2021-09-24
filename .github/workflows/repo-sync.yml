@@ -43,6 +43,7 @@ jobs:
     - name: Pull from source repo
       run: |
         cd  ~/work/the_repo
+        set -x
         git remote add --mirror=fetch source https://${{secrets.DN42_GIT_TOKEN}}@git.dn42.dev/dn42/registry.git || git remote set-url --mirror=fetch source https://${{secrets.DN42_GIT_TOKEN}}@git.dn42.dev/dn42/registry.git 
         git fetch source '+refs/heads/*:refs/heads/*' '+refs/tags/*:refs/tags/*'
       shell: bash
