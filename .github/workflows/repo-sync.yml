@@ -43,13 +43,13 @@ jobs:
     - name: Pull from source repo
       run: |
         cd  ~/work/the_repo
-        git remote add --mirror=fetch dn42 https://${{secrets.DN42_GIT_TOKEN}}@git.dn42.dev/dn42/registry.git
-        git fetch dn42 '+refs/heads/*:refs/heads/*' '+refs/tags/*:refs/tags/*'
+        git remote add --mirror=fetch source https://${{secrets.DN42_GIT_TOKEN}}@git.dn42.dev/dn42/registry.git || git remote set-url --mirror=fetch source https://${{secrets.DN42_GIT_TOKEN}}@git.dn42.dev/dn42/registry.git 
+        git fetch source '+refs/heads/*:refs/heads/*' '+refs/tags/*:refs/tags/*'
       shell: bash
     - name: Push back to target repo
       run: |
         cd  ~/work/the_repo
-        git push -f  --mirror origin
+        git push -f --mirror origin
       shell: bash
     - name: wrtie something to prevent this action inactive
       run: |
