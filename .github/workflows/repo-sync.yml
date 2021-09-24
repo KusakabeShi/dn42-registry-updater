@@ -44,8 +44,12 @@ jobs:
       run: |
         cd  ~/work/the_repo
         set -x
-        { git remote add --mirror=fetch source https://${{secrets.DN42_GIT_TOKEN}}@git.dn42.dev/dn42/registry.git && echo "add" } || \
-        { git remote set-url --mirror=fetch source https://${{secrets.DN42_GIT_TOKEN}}@git.dn42.dev/dn42/registry.git && echo "set" }
+        if git remote add --mirror=fetch source https://${{secrets.DN42_GIT_TOKEN}}@git.dn42.dev/dn42/registry.git ; then
+            echo "add"
+        else
+            git remote set-url --mirror=fetch source https://${{secrets.DN42_GIT_TOKEN}}@git.dn42.dev/dn42/registry.git
+            echo "set"
+        fi
         git fetch source '+refs/heads/*:refs/heads/*' '+refs/tags/*:refs/tags/*'
       shell: bash
     - name: Push back to target repo
