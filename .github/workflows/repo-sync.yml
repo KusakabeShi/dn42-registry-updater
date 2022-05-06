@@ -52,10 +52,19 @@ jobs:
         fi
         git fetch source '+refs/heads/*:refs/heads/*' '+refs/tags/*:refs/tags/*'
       shell: bash
+	- name: Add remote gitlab
+      run: |
+        cd  ~/work/the_repo
+        set -x
+		if git remote add --mirror=fetch gitlab git@gitlab.com:kskbsi/data/dn42-registry.git ; then
+            echo "add gitlab"
+        fi
+      shell: bash
     - name: Push back to target repo
       run: |
         cd  ~/work/the_repo
         git push -f --mirror origin
+		git push -f --mirror gitlab
       shell: bash
     - name: wrtie something to prevent this action inactive
       run: |
