@@ -44,10 +44,10 @@ jobs:
       run: |
         cd  ~/work/the_repo
         set -x
-        if git remote add --mirror=fetch source https://${{secrets.DN42_GIT_TOKEN}}@git.dn42.dev/dn42/registry.git ; then
+        if git remote add source https://${{secrets.DN42_GIT_TOKEN}}@git.dn42.dev/dn42/registry.git ; then
             echo "add"
         else
-            git remote set-url --mirror=fetch source https://${{secrets.DN42_GIT_TOKEN}}@git.dn42.dev/dn42/registry.git
+            git remote set-url source https://${{secrets.DN42_GIT_TOKEN}}@git.dn42.dev/dn42/registry.git
             echo "set"
         fi
         git fetch source '+refs/heads/*:refs/heads/*' '+refs/tags/*:refs/tags/*'
@@ -56,7 +56,7 @@ jobs:
       run: |
         cd  ~/work/the_repo
         set -x
-        if git remote add --mirror=fetch gitlab git@gitlab.com:kskbsi/data/dn42-registry.git ; then
+        if git remote add gitlab git@gitlab.com:kskbsi/data/dn42-registry.git ; then
             echo "add gitlab"
         fi
       shell: bash
