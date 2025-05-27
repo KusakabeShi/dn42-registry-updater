@@ -12,7 +12,7 @@ jobs:
     env:
       GIT_SSH_COMMAND: "ssh -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no -i ~/.ssh/id_rsa"
     steps:
-    - uses: actions/checkout@v2
+    - uses: actions/checkout@v4
     - name: setup ssh key
       run: |
         mkdir -p  ~/.ssh
