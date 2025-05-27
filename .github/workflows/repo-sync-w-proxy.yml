@@ -28,7 +28,7 @@ jobs:
       id: current-time
     - name: Clone from target repo
       run: |
-        git clone --mirror git@github.com:KusakabeSi/dn42-registry.git ~/work/the_repo
+        git clone --bare git@github.com:KusakabeSi/dn42-registry.git ~/work/the_repo
     - name: Install and setup wireguard
       run: |
         sudo ln -s /usr/bin/resolvectl /usr/local/bin/resolvconf
