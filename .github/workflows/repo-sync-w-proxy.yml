@@ -27,34 +27,46 @@ jobs:
     - name: Get current time
       uses: gerred/actions/current-time@master
       id: current-time
+    - name: Cache Origional files
+      id: cache
+      uses: actions/cache@v4
+      with:
+        path: |
+          ~/work/the_repo
+        key: I am a key!
     - name: Clone from target repo
+      if: steps.cache.outputs.cache-hit != 'true'
       run: |
-        git clone --bare git@github.com:KusakabeSi/dn42-registry.git ~/work/the_repo
-    - name: Install and setup wireguard
-      run: |
-        sudo ln -s /usr/bin/resolvectl /usr/local/bin/resolvconf
-        sudo apt-get install -y wireguard
-        sudo echo "${{secrets.WG_PROFILE}}" | sudo tee /etc/wireguard/wg-profile.conf
-        sudo wg-quick up wg-profile
-      shell: bash
+        git clone --bare git@github.com:KusakabeShi/dn42-registry.git ~/work/the_repo
     - name: Pull from source repo
       run: |
         cd  ~/work/the_repo
-        git remote add --mirror=fetch dn42 https://${{secrets.DN42_GIT_TOKEN}}@git.dn42.dev/dn42/registry.git
-        git fetch dn42 '+refs/heads/*:refs/heads/*' '+refs/tags/*:refs/tags/*'
+        set -x
+        if git remote add source https://${{secrets.DN42_GIT_TOKEN}}@git.dn42.dev/dn42/registry.git ; then
+            echo "add"
+        else
+            git remote set-url source https://${{secrets.DN42_GIT_TOKEN}}@git.dn42.dev/dn42/registry.git
+            echo "set"
+        fi
+        git fetch source '+refs/heads/*:refs/heads/*' '+refs/tags/*:refs/tags/*'
       shell: bash
-    - name: stop wireguard
+    - name: Add remote gitlab
       run: |
-        wg-quick down wg-profile
+        cd  ~/work/the_repo
+        set -x
+        if git remote add gitlab git@gitlab.com:kskbsi/data/dn42-registry.git ; then
+            echo "add gitlab"
+        fi
       shell: bash
     - name: Push back to target repo
       run: |
         cd  ~/work/the_repo
-        git push -f  --mirror origin
+        git push -f --mirror origin
+        git push -f gitlab master
       shell: bash
     - name: wrtie something to prevent this action inactive
       run: |
-        echo ${{ steps.current-time.outputs.time }} > $GITHUB_WORKSPACE/sync
+        echo $(date +%Y-%m-%d) > $GITHUB_WORKSPACE/sync
       shell: bash
     - name: Commit & Push changes
       uses: actions-js/push@master

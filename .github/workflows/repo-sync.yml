@@ -36,7 +36,7 @@ jobs:
     - name: Clone from target repo
       if: steps.cache.outputs.cache-hit != 'true'
       run: |
-        git clone --bare git@github.com:KusakabeSi/dn42-registry.git ~/work/the_repo
+        git clone --bare git@github.com:KusakabeShi/dn42-registry.git ~/work/the_repo
     - name: Pull from source repo
       run: |
         cd  ~/work/the_repo
@@ -61,7 +61,7 @@ jobs:
       run: |
         cd  ~/work/the_repo
         git push -f --mirror origin
-        git push -f --mirror gitlab
+        git push -f gitlab master
       shell: bash
     - name: wrtie something to prevent this action inactive
       run: |
