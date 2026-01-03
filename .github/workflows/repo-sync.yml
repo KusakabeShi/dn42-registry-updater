@@ -1,12 +1,9 @@
 name: Repo Sync
 
 on:
+  workflow_dispatch: 
   schedule:
   - cron:  "2/13 * * * *"
-  repository_dispatch:
-    types: sync-repo
-  watch:
-    types: [started]
 
 jobs:
   repo-sync:
